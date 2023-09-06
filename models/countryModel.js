@@ -132,7 +132,6 @@ const consultationPackageSchema = new mongoose.Schema({
 //MAIN SCHEMA ---- MODEL
 //Country Schema
 const countrySchema = new mongoose.Schema({
-  _id: new mongoose.Types.ObjectId(),
   name: {
     type: String,
     required: [true, 'A country must have a name'],
