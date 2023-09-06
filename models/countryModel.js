@@ -47,7 +47,6 @@ const informationSchema = new mongoose.Schema({
 const visitPackageSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'A package must have a name'],
     unique: true,
     trim: true,
   },
@@ -71,7 +70,6 @@ const availableIntakeSchema = new mongoose.Schema({
 const programSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'A country must have a name'],
     unique: true,
     trim: true,
   },
@@ -103,7 +101,6 @@ const educationCostSchema = new mongoose.Schema({
 const educationalPackageSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'A package must have a name'],
     unique: true,
     trim: true,
   },
@@ -121,7 +118,6 @@ const educationalPackageSchema = new mongoose.Schema({
 const consultationPackageSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'A consultation package must have a name'],
     unique: true,
     trim: true,
   },
