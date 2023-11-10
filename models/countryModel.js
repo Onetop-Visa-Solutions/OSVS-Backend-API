@@ -2,25 +2,44 @@ const mongoose = require('mongoose');
 
 //Common Schemas
 const requirementSchema = new mongoose.Schema({
-  basicRequirements: {
-    type: Object,
-    name: String,
-    Description: String,
-  },
   undergradRequirements: {
+    title: string,
     type: Object,
     name: String,
+    requirementsList: [
+      {
+        title: String,
+        detail: [{ name: String, content: String }],
+        icon: String,
+      },
+    ], //With a sense that a requirement could have more than one detail, such as English proficiency requirements could have many sub-requirement
     Description: String,
   },
   gradRequirements: {
+    title: string,
     type: Object,
     name: String,
+    requirementsList: [
+      {
+        title: String,
+        detail: [{ name: String, content: String }],
+        icon: String,
+      },
+    ],
     Description: String,
   },
   highSchoolRequirements: {
+    title: string, //Card name equivalent
     type: Object,
-    name: String,
-    Description: String,
+    name: String, //Name the Card
+    requirementsList: [
+      {
+        title: String,
+        detail: [{ name: String, content: String }],
+        icon: String,
+      },
+    ],
+    Description: String, //Description under the card name
   },
 });
 
@@ -47,7 +66,6 @@ const informationSchema = new mongoose.Schema({
 const visitPackageSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     trim: true,
   },
   information: {
@@ -70,7 +88,6 @@ const availableIntakeSchema = new mongoose.Schema({
 const programSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     trim: true,
   },
   description: String,
@@ -101,10 +118,11 @@ const educationCostSchema = new mongoose.Schema({
 const educationalPackageSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     trim: true,
   },
-  information: { type: informationSchema },
+  information: { type: [informationSchema] },
+  institutions: [{ name: String, icon: String }],
+  institutionsDescription: String,
   programs: {
     type: [programSchema],
   },
@@ -118,7 +136,6 @@ const educationalPackageSchema = new mongoose.Schema({
 const consultationPackageSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     trim: true,
   },
   services: [{ type: Object, name: String, description: String }],
@@ -148,7 +165,7 @@ const countrySchema = new mongoose.Schema({
     required: [true, 'A country must have a description'],
     trim: true,
   },
-  samplePhotos: {
+  descriptionImages: {
     type: [String],
   },
   createdAt: { type: Date, default: Date.now() },
@@ -165,9 +182,14 @@ const countrySchema = new mongoose.Schema({
     type: Object,
     currency: String,
     currencySymbol: String,
-    description: String,
+    advantage: String,
+    image: String,
+  },
+  testimonialVideo: {
+    type: String,
   },
 });
 
 const Country = mongoose.model('Country', countrySchema);
+
 module.exports = Country;
