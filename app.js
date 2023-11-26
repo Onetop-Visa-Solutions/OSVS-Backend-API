@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const { countryRoute, serviceRoute } = require('./routes');
+const { countryRoute, serviceRoute, paymentRoute } = require('./routes');
 
 //MIDDLEWARE
 //THIRD-PARTY middleware
@@ -45,5 +45,6 @@ app.get('/userinfo', (req, res) => {
 // ROUTES MOUNTING Middleware
 app.use('/api/v1/services', serviceRoute);
 app.use('/api/v1/country', countryRoute);
+app.use('/api/v1/payment', paymentRoute);
 
 module.exports = app;

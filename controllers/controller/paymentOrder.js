@@ -1,10 +1,9 @@
-const APIFeatures = require('./../utils/apiFeatures');
-const paymentModel = require('./../models/payment/paymentHistory');
+const APIFeatures = require('../../utils/apiFeatures');
+const paymentOrderModel = require('../../models/payment/paymentOrder');
 
-exports.getAllPaymentHistory = async (req, res) => {
+exports.getAllPaymentOrders = async (req, res) => {
   try {
-    //EXECUTING QUERY FOR UTILITY FEATURES
-    const features = new APIFeatures(paymentModel.find(), req.query)
+    const features = new APIFeatures(paymentOrderModel.find(), req.query)
       .filter()
       .sort()
       .fieldLimit()
@@ -16,7 +15,7 @@ exports.getAllPaymentHistory = async (req, res) => {
       results: _payments.length,
       lastRequested: req.requestTime,
       data: {
-        paymentHistory: _payments,
+        paymentOrders: _payments,
       },
     });
   } catch (err) {
@@ -24,13 +23,14 @@ exports.getAllPaymentHistory = async (req, res) => {
   }
 };
 
-exports.getPaymentHistory = async (req, res) => {
+exports.getPaymentOrder = async (req, res) => {
   try {
-    const _payment = await paymentModel.findById(req.params.id);
+    console.log(req.params.id)
+    const _payment = await paymentOrderModel.findById(req.params.id);
     res.status(200).json({
       status: 'success',
       data: {
-        payment,
+        _payment,
       },
     });
   } catch (err) {
@@ -38,14 +38,14 @@ exports.getPaymentHistory = async (req, res) => {
   }
 };
 
-exports.createPaymentHistory = async (req, res) => {
+exports.createPaymentOrder = async (req, res) => {
   try {
-    const newPayment = await paymentModel.create(req.body);
+    const newPayment = await paymentOrderModel.create(req.body);
     res.status(200).json({
       status: 'success',
-      message: 'success on creating a country',
+      message: 'success on creating a Payment Order',
       data: {
-        payment: newPayment,
+        paymentOrder: newPayment,
       },
     });
   } catch (err) {
@@ -53,9 +53,9 @@ exports.createPaymentHistory = async (req, res) => {
   }
 };
 
-exports.updatePaymentHistory = async (req, res) => {
+exports.updatePaymentOrder = async (req, res) => {
   try {
-    const country = await paymentModel.findByIdAndUpdate(
+    const _paymentOrders = await paymentOrderModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -67,7 +67,7 @@ exports.updatePaymentHistory = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: {
-        paymentModel,
+        _paymentOrders,
       },
     });
   } catch (err) {
@@ -75,9 +75,9 @@ exports.updatePaymentHistory = async (req, res) => {
   }
 };
 
-exports.deletePaymentHistory = async (req, res) => {
+exports.deletePaymentOrder = async (req, res) => {
   try {
-    await paymentModel.findByIdAndDelete(req.params.id);
+    await paymentOrderModel.findByIdAndDelete(req.params.id);
     res.status(204).json({ status: 'success', data: null });
   } catch (err) {
     res.status(400).json({ status: 'failure', message: err.message });

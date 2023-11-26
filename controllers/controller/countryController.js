@@ -1,5 +1,5 @@
-const Country = require('./../models/countryModel');
-const APIFeatures = require('./../utils/apiFeatures');
+const Country = require('../../models/countryModel');
+const APIFeatures = require('../../utils/apiFeatures');
 //Route handlers | Users
 
 exports.getAllCountries = async (req, res) => {
