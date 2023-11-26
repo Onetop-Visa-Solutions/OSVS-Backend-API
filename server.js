@@ -10,8 +10,9 @@ const DB_URL = process.env.DATABASE.replace(
 );
 
 mongoose
-  .connect(DB_URL)
-  .then(() => console.log('DB connection established successfully'));
+  .connect('mongodb://127.0.0.1:27017/onestep')
+  .then(() => console.log('DB connection established successfully'))
+  .catch((er) => console.log(er));
 
 //SERVER
 const port = process.env.PORT || 5000;
