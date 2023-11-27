@@ -1,53 +1,24 @@
 const mongoose = require('mongoose');
 
 //Common Schemas
-const requirementSchema = new mongoose.Schema({
-  undergradRequirements: {
-    title: string,
-    type: Object,
-    name: String,
-    requirementsList: [
-      {
-        title: String,
-        detail: [{ name: String, content: String }],
-        icon: String,
-      },
-    ], //With a sense that a requirement could have more than one detail, such as English proficiency requirements could have many sub-requirement
-    Description: String,
-  },
-  gradRequirements: {
-    title: string,
-    type: Object,
-    name: String,
-    requirementsList: [
-      {
-        title: String,
-        detail: [{ name: String, content: String }],
-        icon: String,
-      },
-    ],
-    Description: String,
-  },
-  highSchoolRequirements: {
-    title: string, //Card name equivalent
-    type: Object,
-    name: String, //Name the Card
-    requirementsList: [
-      {
-        title: String,
-        detail: [{ name: String, content: String }],
-        icon: String,
-      },
-    ],
-    Description: String, //Description under the card name
-  },
+const educationalRequirementSchema = new mongoose.Schema({
+  title: string,
+  type: Object,
+  name: String,
+  requirementsList: [
+    {
+      title: String,
+      detail: [{ name: String, content: String }],
+      icon: String,
+    },
+  ], //With a sense that a requirement could have more than one detail, such as English proficiency requirements could have many sub-requirement
+  Description: String,
 });
 
 const informationSchema = new mongoose.Schema({
   description: String,
   startDate: Date,
   endDate: Date,
-  season: String,
   year: Number,
   availability: Boolean,
   level: String,
@@ -59,7 +30,6 @@ const informationSchema = new mongoose.Schema({
     label: String,
     length: Number,
   },
-  requirements: { type: requirementSchema },
 });
 
 //Visit Packages
@@ -81,7 +51,7 @@ const visitPackageSchema = new mongoose.Schema({
 
 //Educational Packages
 const availableIntakeSchema = new mongoose.Schema({
-  intakeSeason: { type: [String] },
+  intakeSeasons: { type: [String] },
   intakeYear: Number,
 });
 
@@ -105,6 +75,7 @@ const educationCostSchema = new mongoose.Schema({
   minimumTuitionCost: Number,
   MaximumTuitionCost: Number,
   averageLivingCost: Number,
+  costLabel: String,
   scholarships: [
     {
       type: Object,
@@ -120,16 +91,18 @@ const educationalPackageSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  information: { type: [informationSchema] },
+  information: { type: [informationSchema] }, //Skip this part
   institutions: [{ name: String, icon: String }],
   institutionsDescription: String,
   programs: {
+    //Skip this part
     type: [programSchema],
   },
-  scholarship: {
+  requirements: [educationalRequirementSchema],
+  scholarshipAndFunding: {
     type: educationCostSchema,
   },
-  applicants: [String],
+  applicants: [String], // Skip this part
 });
 
 //Consultation Packages
@@ -151,6 +124,7 @@ const countrySchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
+  alias: { type: String },
   slug: {
     type: String,
     unique: true,
@@ -172,8 +146,8 @@ const countrySchema = new mongoose.Schema({
   visitPackages: {
     type: [visitPackageSchema],
   },
-  educationalPackages: {
-    type: [educationalPackageSchema],
+  educationalPackage: {
+    type: educationalPackageSchema,
   },
   consultationPackages: {
     type: [consultationPackageSchema],
@@ -182,8 +156,13 @@ const countrySchema = new mongoose.Schema({
     type: Object,
     currency: String,
     currencySymbol: String,
-    advantage: String,
-    image: String,
+    advantages: [
+      {
+        name: String,
+        image: String,
+        description: String,
+      },
+    ],
   },
   testimonialVideo: {
     type: String,
