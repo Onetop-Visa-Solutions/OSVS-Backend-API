@@ -1,11 +1,17 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const { countryRoute, serviceRoute, paymentRoute } = require('./routes');
+const {
+  countryRoute,
+  serviceRoute,
+  paymentRoute,
+  testimonialRoute,
+} = require('./routes');
 
 //MIDDLEWARE
 //THIRD-PARTY middleware
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -46,5 +52,6 @@ app.get('/userinfo', (req, res) => {
 app.use('/api/v1/services', serviceRoute);
 app.use('/api/v1/country', countryRoute);
 app.use('/api/v1/payment', paymentRoute);
+app.use('/api/v1/testimonial', testimonialRoute);
 
 module.exports = app;

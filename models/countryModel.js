@@ -169,5 +169,6 @@ const countrySchema = new mongoose.Schema({
   },
 });
 
+countrySchema.set('timestamps', true);
 const Country = mongoose.model('Country', countrySchema);
 module.exports = Country;

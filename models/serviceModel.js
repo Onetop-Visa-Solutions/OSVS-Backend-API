@@ -36,5 +36,7 @@ const serviceSchema = new mongoose.Schema({
   },
 });
 
+
+serviceSchema.set('timestamps', true);
 const Service = mongoose.model('Service', serviceSchema);
 module.exports = Service;
